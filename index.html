@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>CodeLATAM – Aprende a Programar</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+
+  <!-- Swiper.js CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+  <!-- Estilo para estructurar correctamente body y footer & Swiper custom -->
+  <style>
+    html, body {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+    main {
+      flex: 1;
+    }
+    footer {
+      position: relative;
+      z-index: 10; /* Asegura que el footer esté sobre elementos por defecto, pero debajo del chat */
+    }
+
+    /* Estilos personalizados para Swiper */
+    .swiper-pagination-bullet-active {
+      background-color: #2563eb !important; /* Azul de CodeLATAM */
+    }
+
+    .testimonies-swiper-container {
+        position: relative;
+        /* Opcional: Añadir padding si los botones se mueven muy afuera.
+           Para este ejemplo, los dejaremos ligeramente superpuestos pero con fondo.
+        padding-left: 15px;
+        padding-right: 15px; */
+    }
+
+    .swiper-button-next,
+    .swiper-button-prev {
+      color: #2563eb !important; /* Azul de CodeLATAM */
+      --swiper-navigation-size: 28px;
+      background-color: rgba(255, 255, 255, 0.85); /* Fondo un poco más opaco */
+      border-radius: 50%;
+      width: calc(var(--swiper-navigation-size) + 16px); /* Ancho ajustado */
+      height: calc(var(--swiper-navigation-size) + 16px); /* Alto ajustado */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+      top: 50%; /* Centrado verticalmente */
+      transform: translateY(-50%);
+      transition: background-color 0.3s ease; /* Transición suave al hover */
+    }
+    .swiper-button-next:hover,
+    .swiper-button-prev:hover {
+        background-color: rgba(240, 240, 240, 0.95);
+    }
+
+
+    .swiper-button-next::after,
+    .swiper-button-prev::after {
+      font-weight: 900;
+      font-size: calc(var(--swiper-navigation-size) - 4px); /* Icono un poco más pequeño que el botón */
+    }
+
+    .swiper-button-prev {
+      left: 0px; /* Mueve el botón izquierdo ligeramente hacia adentro del borde del swiper-container */
+    }
+    .swiper-button-next {
+      right: 0px; /* Mueve el botón derecho ligeramente hacia adentro */
+    }
+
+    /* Ajuste para pantallas muy pequeñas para que los botones no se coman mucho espacio */
+    @media (max-width: 480px) {
+        .swiper-button-prev {
+            left: -5px;
+        }
+        .swiper-button-next {
+            right: -5px;
+        }
+        .swiper-button-next,
+        .swiper-button-prev {
+            --swiper-navigation-size: 22px; /* Botones más pequeños */
+        }
+    }
+    .swiper-pagination {
+        position: relative; /* Para que el mt-6 funcione bien */
+        bottom: auto !important; /* Swiper a veces lo pone en 'bottom: 10px', lo reseteamos */
+        margin-top: 24px; /* Espacio entre los slides y la paginación */
+    }
+  </style>
+
+</head>
+
+<body class="bg-white text-gray-800">
+
+  <!-- Header -->
+  <header class="bg-white shadow fixed w-full z-20"> <!-- Aumentado z-index por si acaso -->
+    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold text-blue-600">CodeLATAM</a>
+      <nav class="space-x-6 text-sm font-semibold hidden md:block">
+        <a href="cursos.html" class="hover:text-blue-600">Cursos</a>
+        <a href="#beneficios" class="hover:text-blue-600">Beneficios</a>
+        <a href="#testimonios" class="hover:text-blue-600">Testimonios</a> <!-- Enlace a nueva sección -->
+        <a href="#precios" class="hover:text-blue-600">Precios</a>
+        <a href="#faq" class="hover:text-blue-600">FAQ</a>
+        <a href="registro.html" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Registro</a>
+      </nav>
+      <!-- Menú hamburguesa para móvil (Placeholder, sin funcionalidad JS aquí) -->
+      <div class="md:hidden">
+        <button class="text-gray-800 hover:text-blue-600 focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Contenido principal -->
+  <main class="pt-16"> <!-- Padding top igual a la altura del header fijo -->
+    <!-- Hero -->
+    <section class="bg-gradient-to-r from-blue-50 to-blue-100 text-center py-20" data-aos="zoom-in">
+      <div class="max-w-3xl mx-auto px-4">
+        <h2 class="text-4xl font-bold mb-4">Aprende a Programar desde Cero</h2>
+        <p class="text-lg mb-6">Clases online en español, diseñadas para LATAM</p>
+        <div class="flex justify-center gap-4">
+          <a href="registro.html" class="bg-blue-600 text-white px-6 py-3 rounded text-lg hover:bg-blue-700">Empieza Gratis</a>
+          <a href="cursos.html" class="text-blue-600 underline text-lg">Explorar Cursos</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cursos -->
+    <section id="cursos" class="py-20 bg-white">
+      <div class="max-w-6xl mx-auto px-4">
+        <h3 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Cursos Destacados</h3>
+        <div class="grid md:grid-cols-3 gap-8">
+          <div class="bg-white border rounded-lg p-6 shadow hover:shadow-xl transition" data-aos="fade-right">
+            <h4 class="font-semibold text-xl mb-1">Intro a Desarrollo Web</h4>
+            <span class="inline-block text-xs text-white bg-green-500 px-2 py-1 rounded mb-2">Principiante</span>
+            <p class="text-sm">HTML, CSS, Git. 4 semanas. Incluye proyectos guiados.</p>
+          </div>
+          <div class="bg-white border rounded-lg p-6 shadow hover:shadow-xl transition" data-aos="fade-up">
+            <h4 class="font-semibold text-xl mb-1">Python para Ciencia de Datos</h4>
+            <span class="inline-block text-xs text-white bg-yellow-500 px-2 py-1 rounded mb-2">Intermedio</span>
+            <p class="text-sm">Pandas, visualización, limpieza de datos. 6 semanas.</p>
+          </div>
+          <div class="bg-white border rounded-lg p-6 shadow hover:shadow-xl transition" data-aos="fade-left">
+            <h4 class="font-semibold text-xl mb-1">Desarrollo de Apps Móviles</h4>
+            <span class="inline-block text-xs text-white bg-red-500 px-2 py-1 rounded mb-2">Avanzado</span>
+            <p class="text-sm">Flutter, diseño UX/UI, conexión a APIs.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section id="beneficios" class="py-20 bg-blue-50">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <h3 class="text-3xl font-bold mb-12" data-aos="fade-up">¿Por qué elegirnos?</h3>
+        <div class="grid sm:grid-cols-2 md:grid-cols-3 gap-6 text-left text-lg">
+          <div data-aos="fade-up"><p>💡 Enfocado en Latinoamérica</p></div>
+          <div data-aos="fade-up" data-aos-delay="100"><p>🗣️ Clases 100% en español</p></div>
+          <div data-aos="fade-up" data-aos-delay="200"><p>🤖 Tutorías con IA integrada</p></div>
+          <div data-aos="fade-up" data-aos-delay="300"><p>👨‍🏫 Comunidad y mentores activos</p></div>
+          <div data-aos="fade-up" data-aos-delay="400"><p>📱 Accesible desde cualquier dispositivo</p></div>
+          <div data-aos="fade-up" data-aos-delay="500"><p>📄 Certificados digitales al completar</p></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonios -->
+    <section id="testimonios" class="py-20 bg-white"> <!-- Cambiado a bg-white para alternar -->
+      <div class="max-w-6xl mx-auto px-4">
+        <h3 class="text-3xl font-bold text-center mb-12" data-aos="fade-up">Lo que dicen nuestros estudiantes</h3>
+
+        <!-- Swiper Container -->
+        <div class="swiper testimonies-swiper-container overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+          <div class="swiper-wrapper pb-4"> <!-- pb-4 para dar espacio si algún slide es más alto y la paginación se superpone -->
+            <!-- Testimonio Slide 1 -->
+            <div class="swiper-slide h-auto"> <!-- h-auto para que Swiper maneje la altura -->
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=juanp" alt="Foto de Juan P." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Juan P.</p>
+                    <p class="text-sm text-gray-500">Desarrollador Web, Perú</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “Gracias a CodeLATAM hoy trabajo como desarrollador web desde casa. Nunca imaginé lograrlo tan rápido.”
+                </blockquote>
+              </div>
+            </div>
+
+            <!-- Testimonio Slide 2 -->
+            <div class="swiper-slide h-auto">
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=mariag" alt="Foto de Maria G." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Maria G.</p>
+                    <p class="text-sm text-gray-500">Estudiante de C. de Datos, Colombia</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “El curso de Python para Ciencia de Datos superó mis expectativas. La metodología es muy clara.”
+                </blockquote>
+              </div>
+            </div>
+
+            <!-- Testimonio Slide 3 -->
+            <div class="swiper-slide h-auto">
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=carloss" alt="Foto de Carlos S." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Carlos S.</p>
+                    <p class="text-sm text-gray-500">Emprendedor, México</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “Pude crear el prototipo de mi app móvil gracias al curso de Desarrollo de Apps. ¡Genial!”
+                </blockquote>
+              </div>
+            </div>
+
+            <!-- Testimonio Slide 4 -->
+            <div class="swiper-slide h-auto">
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=anal" alt="Foto de Ana L." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Ana L.</p>
+                    <p class="text-sm text-gray-500">Diseñadora UX, Argentina</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “Entender desarrollo web me abrió muchas puertas. El curso introductorio fue perfecto.”
+                </blockquote>
+              </div>
+            </div>
+
+            <!-- Testimonio Slide 5 -->
+            <div class="swiper-slide h-auto">
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=luisf" alt="Foto de Luis F." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Luis F.</p>
+                    <p class="text-sm text-gray-500">Estudiante Universitario, Chile</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “Complementé mis estudios con CodeLATAM y la diferencia es notable. Los tutores con IA son un plus.”
+                </blockquote>
+              </div>
+            </div>
+
+            <!-- Testimonio Slide 6 -->
+            <div class="swiper-slide h-auto">
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=sofiav" alt="Foto de Sofia V." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Sofia V.</p>
+                    <p class="text-sm text-gray-500">Cambio de Carrera, Ecuador</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “Decidí cambiar al mundo tech y CodeLATAM me dio la confianza y las herramientas para empezar.”
+                </blockquote>
+              </div>
+            </div>
+
+            <!-- Testimonio Slide 7 -->
+            <div class="swiper-slide h-auto">
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=martinc" alt="Foto de Martín C." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Martín C.</p>
+                    <p class="text-sm text-gray-500">Freelancer, Uruguay</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “Los certificados digitales me han ayudado a conseguir nuevos clientes. La plataforma es muy accesible.”
+                </blockquote>
+              </div>
+            </div>
+            
+            <!-- Testimonio Slide 8 -->
+            <div class="swiper-slide h-auto">
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=lauraz" alt="Foto de Laura Z." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Laura Z.</p>
+                    <p class="text-sm text-gray-500">Profesora, Bolivia</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “Aprendí a programar para enseñar mejor a mis alumnos. CodeLATAM tiene un enfoque muy didáctico.”
+                </blockquote>
+              </div>
+            </div>
+
+            <!-- Testimonio Slide 9 -->
+            <div class="swiper-slide h-auto">
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=diegor" alt="Foto de Diego R." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Diego R.</p>
+                    <p class="text-sm text-gray-500">Entusiasta Tech, Paraguay</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “Siempre quise aprender a programar por hobby y CodeLATAM lo hizo posible de forma entretenida.”
+                </blockquote>
+              </div>
+            </div>
+
+            <!-- Testimonio Slide 10 -->
+            <div class="swiper-slide h-auto">
+              <div class="bg-blue-50 p-6 rounded-lg shadow-lg h-full flex flex-col">
+                <div class="flex items-center mb-4">
+                  <img src="https://i.pravatar.cc/60?u=valeriah" alt="Foto de Valeria H." class="w-12 h-12 rounded-full mr-4">
+                  <div>
+                    <p class="font-semibold text-gray-800">Valeria H.</p>
+                    <p class="text-sm text-gray-500">Mamá Emprendedora, Guatemala</p>
+                  </div>
+                </div>
+                <blockquote class="text-gray-600 italic text-sm flex-grow">
+                  “Estudio en mis tiempos libres y he avanzado muchísimo. La flexibilidad de los cursos es ideal.”
+                </blockquote>
+              </div>
+            </div>
+            
+          </div> <!-- Fin swiper-wrapper -->
+
+          <!-- Botones de Navegación -->
+          <div class="swiper-button-prev"></div>
+          <div class="swiper-button-next"></div>
+          
+          <!-- Paginación -->
+          <div class="swiper-pagination"></div> <!-- Movido después de los botones para que no se superpongan si se posicionan fuera -->
+
+        </div> <!-- Fin Swiper Container -->
+
+        <div class="text-center mt-12" data-aos="fade-up">
+            <a href="registro.html" class="bg-blue-600 text-white px-8 py-3 rounded-lg text-lg hover:bg-blue-700 transition duration-300">
+                Únete a nuestra comunidad
+            </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Precios -->
+    <section id="precios" class="py-20 bg-gray-100">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <h3 class="text-3xl font-bold mb-10" data-aos="fade-up">Planes y Precios</h3>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="bg-white p-6 rounded shadow" data-aos="fade-right">
+            <h4 class="text-xl font-semibold mb-2">Plan Mensual</h4>
+            <p class="text-2xl font-bold mb-4">$30 USD</p>
+            <p>Acceso total a todos los cursos y comunidad.</p>
+          </div>
+          <div class="bg-blue-600 text-white p-6 rounded shadow" data-aos="fade-left">
+            <h4 class="text-xl font-semibold mb-2">Plan Anual</h4>
+            <p class="text-2xl font-bold mb-4">$300 USD</p>
+            <p>Ahorra 2 meses + beneficios exclusivos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Preguntas frecuentes -->
+    <section id="faq" class="py-20 bg-white">
+      <div class="max-w-4xl mx-auto px-4">
+        <h3 class="text-3xl font-bold text-center mb-10" data-aos="fade-up">Preguntas Frecuentes</h3>
+        <div class="space-y-4" data-aos="fade-up" data-aos-delay="100">
+          <details class="border px-4 py-2 rounded">
+            <summary class="cursor-pointer font-semibold">¿Necesito experiencia previa?</summary>
+            <p class="mt-2 text-sm">No, nuestros cursos están diseñados desde cero para principiantes.</p>
+          </details>
+          <details class="border px-4 py-2 rounded">
+            <summary class="cursor-pointer font-semibold">¿Recibo certificado?</summary>
+            <p class="mt-2 text-sm">Sí, cada curso ofrece un certificado digital al completarlo.</p>
+          </details>
+          <details class="border px-4 py-2 rounded">
+            <summary class="cursor-pointer font-semibold">¿Puedo cancelar cuando quiera?</summary>
+            <p class="mt-2 text-sm">Sí, puedes cancelar tu suscripción en cualquier momento sin penalización.</p>
+          </details>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white py-6 text-center" >
+    <p>© 2025 CodeLATAM. Todos los derechos reservados.</p>
+    <div class="flex justify-center space-x-4 mt-2 text-sm">
+      <a href="https://www.facebook.com/profile.php?id=61576365274087" class="hover:underline">Facebook</a>
+      <a href="https://www.instagram.com/code.latam/" class="hover:underline">Instagram</a>
+    </div>
+  </footer>
+
+  <!-- Chat flotante (Tawk.to) -->
+  <script type="text/javascript">
+    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    (function(){
+      var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+      s1.async=true;
+      s1.src='https://embed.tawk.to/6659db2b981b6c564773df3e/1huodsp9m'; // Reemplaza con tu ID de Tawk.to si es diferente
+      s1.charset='UTF-8';
+      s1.setAttribute('crossorigin','*');
+      s0.parentNode.insertBefore(s1,s0);
+    })();
+  </script>
+
+  <!-- Swiper.js JS -->
+  <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+  <!-- Script para inicializar Swiper y AOS -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      AOS.init({
+        duration: 800, // Duración de las animaciones AOS
+        once: true,    // Animación solo una vez
+      });
+
+      // Inicializar Swiper para testimonios
+      var testimoniesSwiper = new Swiper('.testimonies-swiper-container', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
+        grabCursor: true,
+        watchOverflow: true, // Desactiva navegación si no hay suficientes slides
+        autoplay: { // Opcional: auto-play
+          delay: 5000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: '.swiper-pagination',
+          clickable: true,
+        },
+        navigation: {
+          nextEl: '.swiper-button-next',
+          prevEl: '.swiper-button-prev',
+        },
+        breakpoints: {
+          // Cuando el ancho de la ventana es >= 640px (sm de Tailwind)
+          640: {
+            slidesPerView: 2,
+            spaceBetween: 20
+          },
+          // Cuando el ancho de la ventana es >= 1024px (lg de Tailwind)
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 30
+          }
+        },
+        on: {
+            init: function () {
+                // Forzar actualización de tamaño para autoHeight
+                this.updateSize();
+                this.updateSlides();
+                this.updateProgress();
+                this.updateSlidesClasses();
+            },
+            resize: function () {
+                this.updateSize();
+                this.updateSlides();
+                this.updateProgress();
+                this.updateSlidesClasses();
+            }
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
